@@ -91,7 +91,7 @@ else:
 # Load cleaned dataset
 df = pd.read_excel("qadatav2.xlsx")
 
-st.title("Text Farmer Query Advisor")
+st.title("Responder")
 
 st.write("""
 Type your question below and get the most relevant advisory response from our past data.

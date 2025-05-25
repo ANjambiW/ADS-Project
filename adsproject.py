@@ -5,18 +5,18 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # --- TITLE ---
 st.title("Question and Answer Dashboard")
-st.markdown("This dashboard loads insights from a pre-cleaned dataset — no upload needed.")
+#st.markdown("This dashboard loads insights from a pre-cleaned dataset — no upload needed.")
 
 # --- Load Data ---
 try:
     qadatav2 = pd.read_excel("qadatav2.xlsx")
-    st.success("Dataset loaded successfully!")
+    st.success("Dataset is loaded.")
 except FileNotFoundError:
     st.error("File 'qadatav2.xlsx' not found in the app folder.")
     st.stop()
 
 # --- Data ---
-st.subheader("Preview of the Dataset")
+st.subheader("View Data")
 st.dataframe(qadatav2.head())
 
 # --- Dataset Summary ---
@@ -46,7 +46,7 @@ if 'County' in qadatav2.columns:
 
 # --- Filter by County & About ---
 if 'County' in qadatav2.columns and 'About' in qadatav2.columns and 'Category' in qadatav2.columns:
-    st.subheader("Filter Questions by County and Category")
+    st.subheader("Filter Questions by About and County")
 
     about_filter = st.multiselect("Filter by About", qadatav2['About'].dropna().unique())
     filtered_data = qadatav2.copy()
@@ -73,7 +73,7 @@ if 'Description_Clean' in qadatav2.columns and 'Responses_Clean' in qadatav2.col
 
     st.markdown("Type your question below to get the most similar response from past data.")
 
-    user_query = st.text_input("Enter your question:")
+    user_query = st.text_input("Ask your question:")
 
     if user_query:
         corpus = qadatav2['Description_Clean'].dropna().tolist()

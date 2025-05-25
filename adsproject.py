@@ -19,7 +19,7 @@ if uploaded_file is not None:
 # ----------------------------------
 
 # Title
-st.title("Text Farmer Queries Dashboard")
+st.title("Queries Dashboard")
 
 # Description
 st.write("""

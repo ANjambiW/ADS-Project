@@ -18,6 +18,46 @@ if uploaded_file is not None:
 
 # ----------------------------------
 
+# #####################################
+
+import streamlit as st
+import pandas as pd
+
+# --- Load Data Automatically ---
+st.title("NLP Dashboard for Farmer Queries")
+st.markdown("This dashboard loads insights from a pre-cleaned dataset — no file upload needed.")
+
+try:
+    # Read Excel file stored with the app
+    qadatav2 = pd.read_excel("qadatav2.xlsx")
+    st.success("Dataset loaded successfully!")
+except FileNotFoundError:
+    st.error("The dataset file 'qadatav2.xlsx' was not found in the app folder.")
+    st.stop()
+
+# --- Preview of Data ---
+st.subheader("Preview of the Dataset")
+st.dataframe(qadatav2.head())
+
+# --- Basic Summary Stats ---
+st.subheader("Dataset Summary")
+st.write(qadatav2.describe(include='all'))
+
+# --- Column-wise Insights (example for specific columns) ---
+if 'Category' in qadatav2.columns:
+    st.subheader("Distribution of Query Categories")
+    st.bar_chart(qadatav2['Category'].value_counts())
+
+if 'Response' in qadatav2.columns:
+    st.subheader("Sample Responses")
+    st.write(qadatav2['Response'].dropna().sample(5, random_state=1))
+
+# --- Optional: Add More Custom Analysis ---
+# For example: filter by category, search bar, charts, word cloud, etc.
+
+
+# ###########################################
+
 # Title
 st.title("Descriptive Statistics")
 

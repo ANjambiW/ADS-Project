@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Title
-st.title("Text Descriptives")
+st.title("Text Data")
 
 # File uploader
 uploaded_file = st.file_uploader("Upload cleaned dataset (.csv or .xlsx)", type=["csv", "xlsx"])
@@ -19,24 +19,24 @@ if uploaded_file is not None:
 # ----------------------------------
 
 # Title
-st.title("Queries Dashboard")
+st.title("Descriptive Statistics")
 
 # Description
 st.write("""
-Far.
+#Far.
 """)
 
 # Check if dataframe exists
 if 'df' in locals() or 'df' in globals():
 
-    # Summary statistics
+    # Quick statistics
     st.subheader("Summary Statistics")
     st.write("Total Queries:", len(df))
     st.write("Unique Farmers:", df['Customer_id'].nunique())
     st.write("Number of Counties Represented:", df['County'].nunique())
 
     # Visualize Queries per County
-    st.subheader("Queries by County")
+    st.subheader("Number of Questions by County")
     st.bar_chart(df['County'].value_counts())
 
     # Sample Farmer Questions
@@ -44,7 +44,7 @@ if 'df' in locals() or 'df' in globals():
     # st.write(df['Description_Clean'].sample(10))
 
     # Filter by County
-    st.subheader("Filter Queries by County")
+    st.subheader("Filter Questions by County")
     county = st.selectbox("Select County", df['County'].unique())
     filtered_df = df[df['County'] == county]
     st.dataframe(filtered_df)
@@ -54,7 +54,7 @@ else:
 
 # #############
 
-st.subheader("Explore Queries by County and Category")
+st.subheader("Filter Queries by County and Category")
 
 # Filter by About
 about_filter = st.multiselect("Filter by About", df['About'].dropna().unique())
@@ -77,7 +77,7 @@ if not filtered_data.empty:
     # Pivot for easier plotting
     pivot_table = grouped.pivot(index='County', columns='Category', values='Query Count').fillna(0)
 
-    st.write("Number of Queries per Category in Selected County/Counties")
+    st.write("Number of Questions per Category in Selected County/Counties")
     st.dataframe(pivot_table)
 
     # Combine into one plot
@@ -119,9 +119,9 @@ if user_query:
     matched_question = df.iloc[most_similar_index]['Description_Clean']
     matched_response = df.iloc[most_similar_index]['Responses_Clean']
 
-    st.subheader("Most similar past question:")
+    st.subheader("Most similar question from the data:")
     st.write(matched_question)
 
-    st.subheader("Advisory Response:")
+    st.subheader("Response:")
     st.write(matched_response)
 

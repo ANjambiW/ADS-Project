@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # --- TITLE ---
-st.title("NLP Dashboard for Farmer Queries")
+st.title("Question and Answer Dashboard")
 st.markdown("This dashboard loads insights from a pre-cleaned dataset — no upload needed.")
 
 # --- Load Data ---
@@ -15,12 +15,12 @@ except FileNotFoundError:
     st.error("File 'qadatav2.xlsx' not found in the app folder.")
     st.stop()
 
-# --- Preview of Data ---
+# --- Data ---
 st.subheader("Preview of the Dataset")
 st.dataframe(qadatav2.head())
 
 # --- Dataset Summary ---
-st.subheader("Summary Statistics")
+st.subheader("Quick Statistics")
 st.write("Total Queries:", len(qadatav2))
 if 'Customer_id' in qadatav2.columns:
     st.write("Unique Farmers:", qadatav2['Customer_id'].nunique())
@@ -46,7 +46,7 @@ if 'County' in qadatav2.columns:
 
 # --- Filter by County & About ---
 if 'County' in qadatav2.columns and 'About' in qadatav2.columns and 'Category' in qadatav2.columns:
-    st.subheader("Filter Queries by County and Category")
+    st.subheader("Filter Questions by County and Category")
 
     about_filter = st.multiselect("Filter by About", qadatav2['About'].dropna().unique())
     filtered_data = qadatav2.copy()
@@ -69,9 +69,9 @@ if 'County' in qadatav2.columns and 'About' in qadatav2.columns and 'Category' i
 
 # --- NLP Question Responder ---
 if 'Description_Clean' in qadatav2.columns and 'Responses_Clean' in qadatav2.columns:
-    st.title("Ask a Question")
+    st.title("Question Responder")
 
-    st.markdown("Type your question below to get the most relevant advisory response from our past data.")
+    st.markdown("Type your question below to get the most similar response from past data.")
 
     user_query = st.text_input("Enter your question:")
 
